@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Optimized for BOOM website
+Sitemap: https://boom.rent/sitemap.xml
+
+# Block admin areas (when added later)
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+
+# Allow important pages
+Allow: /truth.html
+Allow: /dashboard.html

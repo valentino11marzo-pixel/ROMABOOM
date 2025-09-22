@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rome Truth - BOOM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --boom-yellow: #FFD700;
+            --boom-cyan: #00CED1;
+            --boom-green: #00FF88;
+            --boom-red: #FF3B3B;
+            --boom-purple: #9D4EDD;
+            --boom-orange: #FF6B35;
+            --dark-bg: #0A0A0A;
+            --dark-surface: #1A1A1A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #888888;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--boom-yellow);
+            border-radius: 5px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            cursor: pointer;
+        }
+
+        .logo-circle {
+            width: 35px;
+            height: 35px;
+            background: var(--boom-yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--boom-yellow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px var(--boom-yellow); }
+            50% { box-shadow: 0 0 50px var(--boom-yellow), 0 0 80px rgba(255, 215, 0, 0.5); }
+        }
+
+        /* Hero - The Truth */
+        .hero-truth {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 50px 80px;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(255, 59, 59, 0.05) 0%, transparent 50%);
+        }
+
+        .truth-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 59, 59, 0.1);
+            border: 1px solid rgba(255, 59, 59, 0.3);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--boom-red);
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        h1 {
+            font-size: clamp(48px, 7vw, 84px);
+            font-weight: 900;
+            line-height: 1;
+            text-align: center;
+            letter-spacing: -3px;
+            animation: fadeInUp 0.8s ease 0.1s both;
+            max-width: 1000px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--boom-red) 0%, var(--boom-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin: 30px 0 50px;
+            text-align: center;
+            max-width: 700px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Valentino's Story Section */
+        .story-section {
+            padding: 100px 50px;
+            background: linear-gradient(180deg, var(--dark-bg) 0%, rgba(255, 215, 0, 0.02) 100%);
+        }
+
+        .story-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .story-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .story-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .story-box {
+            background: var(--dark-surface);
+            border: 2px solid var(--boom-yellow);
+            border-radius: 20px;
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-box::before {
+            content: '1999';
+            position: absolute;
+            top: -50px;
+            right: -30px;
+            font-size: 120px;
+            font-weight: 900;
+            color: rgba(255, 215, 0, 0.05);
+            transform: rotate(-15deg);
+        }
+
+        .story-intro {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--boom-yellow);
+        }
+
+        .story-content {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .story-content p {
+            margin-bottom: 25px;
+        }
+
+        .story-highlight {
+            padding: 25px;
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid var(--boom-yellow);
+            border-radius: 10px;
+            margin: 30px 0;
+            font-style: italic;
+            font-size: 20px;
+        }
+
+        .credentials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .credential-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .credential-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--boom-yellow);
+            margin-bottom: 5px;
+        }
+
+        .credential-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* The Ugly Truth Section */
+        .truth-section {
+            padding: 100px 50px;
+            background: var(--dark-surface);
+        }
+
+        .truth-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 56px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 60px;
+            letter-spacing: -2px;
+        }
+
+        .truth-grid {
+            display: grid;
+            gap: 40px;
+        }
+
+        .truth-card {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 30px;
+            padding: 40px;
+            background: var(--dark-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .truth-card:hover {
+            border-color: var(--boom-red);
+            transform: translateX(10px);
+        }
+
+        .truth-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 59, 59, 0.1);
+            border: 2px solid var(--boom-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .truth-content h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--boom-red);
+        }
+
+        .truth-description {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .truth-reality {
+            padding: 15px;
+            background: rgba(255, 59, 59, 0.05);
+            border-left: 3px solid var(--boom-red);
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .truth-solution {
+            padding: 15px;
+            background: rgba(0, 255, 136, 0.05);
+            border-left: 3px solid var(--boom-green);
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        /* Common Scams Section */
+        .scams-section {
+            padding: 100px 50px;
+            background: linear-gradient(180deg, var(--dark-bg) 0%, rgba(255, 59, 59, 0.03) 100%);
+        }
+
+        .scam-alert {
+            padding: 30px;
+            background: rgba(255, 59, 59, 0.1);
+            border: 2px solid var(--boom-red);
+            border-radius: 20px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .scam-alert-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--boom-red);
+            margin-bottom: 10px;
+        }
+
+        .scams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .scam-card {
+            padding: 35px;
+            background: var(--dark-surface);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .scam-card::before {
+            content: '⚠️';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 30px;
+            background: var(--dark-surface);
+            padding: 0 10px;
+        }
+
+        .scam-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--boom-orange);
+            margin-bottom: 15px;
+        }
+
+        .scam-how {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scam-protection {
+            font-size: 16px;
+            color: var(--boom-green);
+        }
+
+        /* Our Guarantees */
+        .guarantees-section {
+            padding: 100px 50px;
+            background: var(--dark-surface);
+        }
+
+        .guarantee-main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 255, 136, 0.1));
+            border: 2px solid var(--boom-yellow);
+            border-radius: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .guarantee-seal {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: var(--boom-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 0 30px var(--boom-green);
+        }
+
+        .guarantee-title {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: var(--boom-yellow);
+        }
+
+        .guarantees-list {
+            list-style: none;
+            text-align: left;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .guarantee-item {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .guarantee-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+            transform: translateX(10px);
+        }
+
+        .guarantee-icon {
+            font-size: 24px;
+            color: var(--boom-green);
+        }
+
+        .guarantee-text {
+            flex: 1;
+            font-size: 18px;
+        }
+
+        .guarantee-strong {
+            font-weight: 700;
+            color: var(--boom-green);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 50px;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+
+        .cta-subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-primary {
+            background: var(--boom-yellow);
+            color: var(--dark-bg);
+        }
+
+        .cta-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px var(--boom-yellow);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--text-primary);
+        }
+
+        .cta-secondary:hover {
+            background: var(--text-primary);
+            color: var(--dark-bg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-truth {
+                padding: 120px 20px 60px;
+            }
+            
+            h1 {
+                font-size: 42px;
+            }
+            
+            .story-box {
+                padding: 30px;
+            }
+            
+            .truth-card {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .guarantee-main {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                <div class="logo-circle"></div>
+                <span>BOOM</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-truth">
+        <div class="truth-badge">⚠️ Required Reading Before You Rent in Rome</div>
+        <h1>Rome is an <span class="gradient-text">international city<br>with peripheric infrastructure.</span></h1>
+        <p class="hero-subtitle">That's why 90% of foreigners get scammed, exploited, or give up. Here's everything agencies won't tell you.</p>
+    </section>
+
+    <!-- Valentino's Story -->
+    <section class="story-section">
+        <div class="story-container">
+            <div class="story-header">
+                <h2 class="story-title">Why I created <span style="color: var(--boom-yellow);">BOOM.</span></h2>
+            </div>
+            
+            <div class="story-box">
+                <div class="story-intro">I'm Valentino. Born in Rome, 1999.</div>
+                
+                <div class="story-content">
+                    <p>My family has been in Rome real estate for <strong>40 years</strong>. My parents, uncles, cousins – everyone. I grew up listening to landlord complaints at dinner, tenant nightmares at lunch, and agency tricks during coffee.</p>
+                    
+                    <p>At 18, I started working with international clients – students, expats, digital nomads. I watched them get destroyed by a system designed to exploit outsiders. Good people with good money treated like criminals.</p>
+                    
+                    <div class="story-highlight">
+                        "I saw a Google engineer sleep in his car for 2 weeks because every agency wanted €5,000 upfront for a fake listing."
+                    </div>
+                    
+                    <p>The breaking point? A French couple with a baby. Perfect income, perfect documents. 47 rejections because "no foreigners." They left Rome. That's when I said: <strong>fuck this.</strong></p>
+                    
+                    <p>I know every trick, every scam, every backdoor in this city. My family taught me the old ways. My generation demands the new. BOOM is where they meet.</p>
+                    
+                    <p>I'm not here to make friends with agencies. I'm here to burn their playbook and build something that actually works. <strong>For people like you.</strong></p>
+                </div>
+                
+                <div class="credentials-grid">
+                    <div class="credential-item">
+                        <div class="credential-number">40</div>
+                        <div class="credential-label">Years family experience</div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-number">6</div>
+                        <div class="credential-label">Years helping internationals</div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-number">387</div>
+                        <div class="credential-label">Happy tenants housed</div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-number">0</div>
+                        <div class="credential-label">Fucks given about agencies</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Ugly Truth -->
+    <section class="truth-section">
+        <div class="truth-container">
+            <h2 class="section-title">The ugly truth about<br><span style="color: var(--boom-red);">Rome rentals.</span></h2>
+            
+            <div class="truth-grid">
+                <div class="truth-card">
+                    <div class="truth-icon">🎭</div>
+                    <div class="truth-content">
+                        <h3>The Fake Listing Game</h3>
+                        <p class="truth-description">That beautiful apartment you saw online? It was rented 3 months ago. Or never existed.</p>
+                        <div class="truth-reality">
+                            <strong>Reality:</strong> Agencies use fake listings as "bait" to collect your contacts. Once they have you, they'll show you overpriced garbage.
+                        </div>
+                        <div class="truth-solution">
+                            <strong>BOOM:</strong> Every apartment video-verified by us, with timestamp. If it's on BOOM, it exists and it's available.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="truth-card">
+                    <div class="truth-icon">💰</div>
+                    <div class="truth-content">
+                        <h3>The Hidden Fee Mafia</h3>
+                        <p class="truth-description">First month + last month + 2 months deposit + agency fee + contract fee + "administration" + VAT = €8,000 to move in.</p>
+                        <div class="truth-reality">
+                            <strong>Reality:</strong> Agencies invent fees. "Contract registration fee" (fake), "key handover fee" (illegal), "file opening fee" (what?).
+                        </div>
+                        <div class="truth-solution">
+                            <strong>BOOM:</strong> One commission. That's it. We even cover contract registration costs.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="truth-card">
+                    <div class="truth-icon">🚫</div>
+                    <div class="truth-content">
+                        <h3>The Foreigner Filter</h3>
+                        <p class="truth-description">"Sorry, the owner prefers Italians" = you're not welcome here, no matter your money.</p>
+                        <div class="truth-reality">
+                            <strong>Reality:</strong> 70% of Roman landlords openly discriminate. Agencies won't fight it because they need landlords more than you.
+                        </div>
+                        <div class="truth-solution">
+                            <strong>BOOM:</strong> We only work with non-discriminatory owners. Your passport doesn't matter. Your money does.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="truth-card">
+                    <div class="truth-icon">📝</div>
+                    <div class="truth-content">
+                        <h3>The Black Contract Trap</h3>
+                        <p class="truth-description">No official contract = no rights. One problem and you're homeless.</p>
+                        <div class="truth-reality">
+                            <strong>Reality:</strong> 40% of Rome rentals are "in nero" (black market). Cheaper? Yes. Until the landlord kicks you out with 24h notice.
+                        </div>
+                        <div class="truth-solution">
+                            <strong>BOOM:</strong> 100% registered contracts. Legal protection. Real tenant rights. Always.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="truth-card">
+                    <div class="truth-icon">⏰</div>
+                    <div class="truth-content">
+                        <h3>The Eternal Wait</h3>
+                        <p class="truth-description">45 days average to rent. Meanwhile, you're bleeding money on Airbnb.</p>
+                        <div class="truth-reality">
+                            <strong>Reality:</strong> Agencies show 20 people the same flat, create bidding wars, then ghost everyone except the highest offer.
+                        </div>
+                        <div class="truth-solution">
+                            <strong>BOOM:</strong> Apply Monday, move Wednesday. 48-hour guarantee or we pay your hotel.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Common Scams -->
+    <section class="scams-section">
+        <div class="truth-container">
+            <h2 class="section-title">Scams everyone falls for<br><span style="color: var(--boom-orange);">(until now).</span></h2>
+            
+            <div class="scam-alert">
+                <div class="scam-alert-title">🚨 If it sounds too good, it's a scam</div>
+                <p>Central Rome, 2BR, €600/month = You're about to lose money</p>
+            </div>
+            
+            <div class="scams-grid">
+                <div class="scam-card">
+                    <h3 class="scam-name">The Deposit Disappearance</h3>
+                    <p class="scam-how"><strong>How it works:</strong> 3-6 months deposit upfront. When you leave, suddenly there's "damage" everywhere. No receipts, no proof, no deposit back.</p>
+                    <p class="scam-protection"><strong>BOOM Protection:</strong> Video documentation on move-in/out. Deposits in escrow account. Full transparency.</p>
+                </div>
+                
+                <div class="scam-card">
+                    <h3 class="scam-name">The Airbnb Switch</h3>
+                    <p class="scam-how"><strong>How it works:</strong> "Long-term" rental that's actually an illegal Airbnb. After 3 months: "Sorry, my cousin needs it."</p>
+                    <p class="scam-protection"><strong>BOOM Protection:</strong> Verified long-term contracts only. Minimum 12-month owner commitment.</p>
+                </div>
+                
+                <div class="scam-card">
+                    <h3 class="scam-name">The Western Union Wire</h3>
+                    <p class="scam-how"><strong>How it works:</strong> "Send deposit via Western Union to secure the apartment." You send, they disappear.</p>
+                    <p class="scam-protection"><strong>BOOM Protection:</strong> Stripe payments only. Never pay before contracts. Always traceable.</p>
+                </div>
+                
+                <div class="scam-card">
+                    <h3 class="scam-name">The Fake Owner</h3>
+                    <p class="scam-how"><strong>How it works:</strong> Person showing apartment doesn't own it. Takes your money, gives fake keys. Real owner shows up.</p>
+                    <p class="scam-protection"><strong>BOOM Protection:</strong> Ownership verification mandatory. Property documents checked. Real owners only.</p>
+                </div>
+                
+                <div class="scam-card">
+                    <h3 class="scam-name">The Utility Surprise</h3>
+                    <p class="scam-how"><strong>How it works:</strong> "Utilities included" until you get a €500 bill for "excess usage" every month.</p>
+                    <p class="scam-protection"><strong>BOOM Protection:</strong> Clear utility caps in contract. Real meter readings. No surprise charges.</p>
+                </div>
+                
+                <div class="scam-card">
+                    <h3 class="scam-name">The Document Hostage</h3>
+                    <p class="scam-how"><strong>How it works:</strong> Agency keeps your documents "for processing" then demands extra fees to return them.</p>
+                    <p class="scam-protection"><strong>BOOM Protection:</strong> Digital copies only. You keep originals. Always.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Guarantees -->
+    <section class="guarantees-section">
+        <div class="truth-container">
+            <h2 class="section-title">The BOOM <span style="color: var(--boom-green);">guarantee.</span></h2>
+            
+            <div class="guarantee-main">
+                <div class="guarantee-seal">✓</div>
+                <h3 class="guarantee-title">We put our money where our mouth is.</h3>
+                
+                <ul class="guarantees-list">
+                    <li class="guarantee-item">
+                        <span class="guarantee-icon">⚡</span>
+                        <span class="guarantee-text"><span class="guarantee-strong">48-Hour Guarantee:</span> From application to keys in 48h or we pay your hotel.</span>
+                    </li>
+                    <li class="guarantee-item">
+                        <span class="guarantee-icon">🎥</span>
+                        <span class="guarantee-text"><span class="guarantee-strong">100% Real:</span> Every apartment video-verified. No catfishing. Ever.</span>
+                    </li>
+                    <li class="guarantee-item">
+                        <span class="guarantee-icon">💰</span>
+                        <span class="guarantee-text"><span class="guarantee-strong">No Hidden Fees:</span> One commission. Nothing else. Surprise fees = immediate refund.</span>
+                    </li>
+                    <li class="guarantee-item">
+                        <span class="guarantee-icon">📝</span>
+                        <span class="guarantee-text"><span class="guarantee-strong">Legal Protection:</span> Registered contracts only. Your rights protected by law.</span>
+                    </li>
+                    <li class="guarantee-item">
+                        <span class="guarantee-icon">🔒</span>
+                        <span class="guarantee-text"><span class="guarantee-strong">Deposit Safety:</span> Held in escrow. Full documentation. Transparent return process.</span>
+                    </li>
+                    <li class="guarantee-item">
+                        <span class="guarantee-icon">🌍</span>
+                        <span class="guarantee-text"><span class="guarantee-strong">No Discrimination:</span> Your passport is irrelevant. Your money is welcome.</span>
+                    </li>
+                    <li class="guarantee-item">
+                        <span class="guarantee-icon">🎯</span>
+                        <span class="guarantee-text"><span class="guarantee-strong">PFS Promise:</span> Can't find your apartment? Full €350 refund in 24h.</span>
+                    </li>
+                    <li class="guarantee-item">
+                        <span class="guarantee-icon">🚫</span>
+                        <span class="guarantee-text"><span class="guarantee-strong">Zero Tolerance:</span> Any scam attempt = immediate contract termination + legal action.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Ready for the <span class="gradient-text">truth?</span></h2>
+            <p class="cta-subtitle">Stop getting scammed. Start living in Rome.</p>
+            
+            <div class="cta-buttons">
+                <button class="cta-button cta-primary" onclick="window.location.href='/#precheck'">
+                    Take the Pre-Check →
+                </button>
+                <button class="cta-button cta-secondary" onclick="window.location.href='/browse'">
+                    Browse Real Apartments
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth reveal on scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all truth cards and scam cards
+        document.querySelectorAll('.truth-card, .scam-card, .guarantee-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.pageYOffset > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.98)';
+                nav.style.backdropFilter = 'blur(20px)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+
+        // Counter animation for credentials
+        function animateCounter(el) {
+            const target = parseInt(el.innerText);
+            const duration = 1000;
+            const step = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    el.innerText = target;
+                    clearInterval(timer);
+                } else {
+                    el.innerText = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Trigger counter animation when credentials come into view
+        const credentialsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    credentialsObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.credential-number').forEach(el => {
+            credentialsObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

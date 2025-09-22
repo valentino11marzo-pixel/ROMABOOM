@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOM Owner Dashboard - Property Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --boom-yellow: #FFD700;
+            --boom-cyan: #00CED1;
+            --boom-green: #00FF88;
+            --boom-purple: #9D4EDD;
+            --boom-red: #FF3B3B;
+            --boom-orange: #FF6B35;
+            --dark-bg: #0A0A0A;
+            --dark-surface: #1A1A1A;
+            --dark-elevated: #252525;
+            --text-primary: #FFFFFF;
+            --text-secondary: #888888;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--dark-surface);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            cursor: pointer;
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            background: var(--boom-yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--boom-yellow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px var(--boom-yellow); }
+            50% { box-shadow: 0 0 50px var(--boom-yellow), 0 0 80px rgba(255, 215, 0, 0.5); }
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .owner-badge {
+            padding: 4px 10px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 100px;
+            font-size: 11px;
+            color: var(--boom-green);
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--boom-green);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 30px;
+        }
+
+        /* Header */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header-left h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .header-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .header-btn.primary {
+            background: var(--boom-green);
+            color: var(--dark-bg);
+            border-color: var(--boom-green);
+        }
+
+        /* Revenue Overview */
+        .revenue-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .revenue-card {
+            padding: 25px;
+            background: var(--dark-surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .revenue-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--boom-green);
+        }
+
+        .revenue-card.highlight {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 206, 209, 0.05));
+            border-color: rgba(0, 255, 136, 0.2);
+        }
+
+        .revenue-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .revenue-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--boom-green);
+            margin-bottom: 5px;
+        }
+
+        .revenue-change {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .change-positive {
+            color: var(--boom-green);
+        }
+
+        .change-negative {
+            color: var(--boom-red);
+        }
+
+        /* Properties Grid */
+        .properties-section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .properties-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .property-card {
+            display: grid;
+            grid-template-columns: 150px 1fr auto;
+            gap: 25px;
+            padding: 25px;
+            background: var(--dark-surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .property-card:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .property-image {
+            width: 150px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--boom-yellow), var(--boom-cyan));
+            border-radius: 12px;
+        }
+
+        .property-details h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .property-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .property-tenant {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 100px;
+            font-size: 14px;
+        }
+
+        .tenant-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--boom-purple);
+        }
+
+        .property-stats {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .stat-item {
+            text-align: right;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--boom-green);
+        }
+
+        .property-status {
+            padding: 6px 14px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 100px;
+            color: var(--boom-green);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Analytics Chart */
+        .analytics-section {
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            padding: 30px;
+            background: var(--dark-surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chart-placeholder {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .chart-placeholder h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        /* Payment History */
+        .payments-table {
+            background: var(--dark-surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 120px 1fr 200px 150px 150px 120px;
+            gap: 20px;
+            padding: 20px 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 120px 1fr 200px 150px 150px 120px;
+            gap: 20px;
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .payment-date {
+            font-weight: 600;
+        }
+
+        .payment-property {
+            color: var(--text-secondary);
+        }
+
+        .payment-tenant {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .payment-amount {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--boom-green);
+        }
+
+        .payment-status {
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-received {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--boom-green);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .status-pending {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--boom-yellow);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .payment-action {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .payment-action:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--boom-green);
+        }
+
+        /* Maintenance Alerts */
+        .alerts-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .alert-card {
+            display: grid;
+            grid-template-columns: 50px 1fr auto;
+            gap: 20px;
+            padding: 20px;
+            background: var(--dark-surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .alert-card.urgent {
+            border-color: rgba(255, 59, 59, 0.3);
+            background: rgba(255, 59, 59, 0.03);
+        }
+
+        .alert-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .alert-details h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .alert-details p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .alert-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .alert-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .alert-btn:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--boom-green);
+        }
+
+        .alert-btn.urgent {
+            background: var(--boom-red);
+            border-color: var(--boom-red);
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 206, 209, 0.05));
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .quick-stat {
+            text-align: center;
+        }
+
+        .quick-stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--boom-green);
+            margin-bottom: 5px;
+        }
+
+        .quick-stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Empty State */
+        .empty-state {
+            padding: 60px;
+            text-align: center;
+            background: var(--dark-surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .empty-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .empty-button {
+            padding: 12px 24px;
+            background: var(--boom-green);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .empty-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .revenue-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .property-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .table-header,
+            .table-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo-circle"></div>
+                <div class="logo-text">BOOM</div>
+                <span class="owner-badge">OWNER</span>
+            </div>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <span class="nav-icon">📊</span>
+                            <span>Overview</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">🏠</span>
+                            <span>Properties</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">💰</span>
+                            <span>Financials</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">👥</span>
+                            <span>Tenants</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">🔧</span>
+                            <span>Maintenance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">📄</span>
+                            <span>Documents</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">📈</span>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">💬</span>
+                            <span>Messages</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">➕</span>
+                            <span>Add Property</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="nav-icon">⚙️</span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Owner Dashboard</h1>
+                    <p class="header-subtitle">Welcome back, Giovanni! Your portfolio is performing excellently.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn">
+                        📊 Export Report
+                    </button>
+                    <button class="header-btn primary">
+                        ➕ Add Property
+                    </button>
+                </div>
+            </header>
+
+            <!-- Revenue Overview -->
+            <section class="revenue-overview">
+                <div class="revenue-card highlight">
+                    <div class="revenue-label">
+                        💰 Monthly Revenue
+                    </div>
+                    <div class="revenue-value">€7,200</div>
+                    <div class="revenue-change change-positive">
+                        ↑ 12% vs last month
+                    </div>
+                </div>
+                <div class="revenue-card">
+                    <div class="revenue-label">
+                        📊 Annual Revenue
+                    </div>
+                    <div class="revenue-value">€86,400</div>
+                    <div class="revenue-change change-positive">
+                        ↑ 8% YoY
+                    </div>
+                </div>
+                <div class="revenue-card">
+                    <div class="revenue-label">
+                        🏠 Occupancy Rate
+                    </div>
+                    <div class="revenue-value">100%</div>
+                    <div class="revenue-change change-positive">
+                        All rented!
+                    </div>
+                </div>
+                <div class="revenue-card">
+                    <div class="revenue-label">
+                        ⏱️ Avg Days to Rent
+                    </div>
+                    <div class="revenue-value">2.5</div>
+                    <div class="revenue-change change-positive">
+                        ↓ 50% faster
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Stats Banner -->
+            <div class="quick-stats">
+                <div class="quick-stat">
+                    <div class="quick-stat-value">4</div>
+                    <div class="quick-stat-label">Active Properties</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">4</div>
+                    <div class="quick-stat-label">Current Tenants</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">€14,400</div>
+                    <div class="quick-stat-label">Total Deposits Held</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">98%</div>
+                    <div class="quick-stat-label">Satisfaction Score</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">0</div>
+                    <div class="quick-stat-label">Late Payments</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">2</div>
+                    <div class="quick-stat-label">Pending Requests</div>
+                </div>
+            </div>
+
+            <!-- Properties Overview -->
+            <section class="properties-section">
+                <div class="section-header">
+                    <h2 class="section-title">Your Properties</h2>
+                </div>
+                <div class="properties-grid">
+                    <div class="property-card">
+                        <div class="property-image"></div>
+                        <div class="property-details">
+                            <h3>Modern Loft in Trastevere</h3>
+                            <div class="property-info">
+                                <div class="info-item">
+                                    📍 Via della Scala 42
+                                </div>
+                                <div class="info-item">
+                                    🛏️ 2 beds
+                                </div>
+                                <div class="info-item">
+                                    📐 85m²
+                                </div>
+                            </div>
+                            <div class="property-tenant">
+                                <div class="tenant-avatar"></div>
+                                <span>Marco Rossi • Since Jan 2024</span>
+                            </div>
+                        </div>
+                        <div class="property-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">Monthly Rent</div>
+                                <div class="stat-value">€1,800</div>
+                            </div>
+                            <div class="property-status">Occupied</div>
+                        </div>
+                    </div>
+
+                    <div class="property-card">
+                        <div class="property-image"></div>
+                        <div class="property-details">
+                            <h3>Penthouse in Monti</h3>
+                            <div class="property-info">
+                                <div class="info-item">
+                                    📍 Via del Boschetto 15
+                                </div>
+                                <div class="info-item">
+                                    🛏️ 3 beds
+                                </div>
+                                <div class="info-item">
+                                    📐 120m²
+                                </div>
+                            </div>
+                            <div class="property-tenant">
+                                <div class="tenant-avatar"></div>
+                                <span>Sarah Chen • Since Mar 2024</span>
+                            </div>
+                        </div>
+                        <div class="property-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">Monthly Rent</div>
+                                <div class="stat-value">€3,500</div>
+                            </div>
+                            <div class="property-status">Occupied</div>
+                        </div>
+                    </div>
+
+                    <div class="property-card">
+                        <div class="property-image"></div>
+                        <div class="property-details">
+                            <h3>Studio near Colosseum</h3>
+                            <div class="property-info">
+                                <div class="info-item">
+                                    📍 Via dei Serpenti 88
+                                </div>
+                                <div class="info-item">
+                                    🛏️ Studio
+                                </div>
+                                <div class="info-item">
+                                    📐 45m²
+                                </div>
+                            </div>
+                            <div class="property-tenant">
+                                <div class="tenant-avatar"></div>
+                                <span>John Smith • Since Jun 2024</span>
+                            </div>
+                        </div>
+                        <div class="property-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">Monthly Rent</div>
+                                <div class="stat-value">€1,200</div>
+                            </div>
+                            <div class="property-status">Occupied</div>
+                        </div>
+                    </div>
+
+                    <div class="property-card">
+                        <div class="property-image"></div>
+                        <div class="property-details">
+                            <h3>Classic Apartment in Prati</h3>
+                            <div class="property-info">
+                                <div class="info-item">
+                                    📍 Via Cola di Rienzo 200
+                                </div>
+                                <div class="info-item">
+                                    🛏️ 1 bed
+                                </div>
+                                <div class="info-item">
+                                    📐 60m²
+                                </div>
+                            </div>
+                            <div class="property-tenant">
+                                <div class="tenant-avatar"></div>
+                                <span>Lisa Brown • Since Sep 2024</span>
+                            </div>
+                        </div>
+                        <div class="property-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">Monthly Rent</div>
+                                <div class="stat-value">€700</div>
+                            </div>
+                            <div class="property-status">Occupied</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Revenue Chart -->
+            <section class="analytics-section">
+                <div class="section-header">
+                    <h2 class="section-title">Revenue Trends</h2>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <h3>€7,200/month</h3>
+                        <p>Steady growth over the last 12 months</p>
+                        <br>
+                        <canvas id="revenueChart" style="max-width: 100%; height: 300px;"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Payments -->
+            <section>
+                <div class="section-header">
+                    <h2 class="section-title">Recent Payments</h2>
+                </div>
+                <div class="payments-table">
+                    <div class="table-header">
+                        <div>Date</div>
+                        <div>Property</div>
+                        <div>Tenant</div>
+                        <div>Amount</div>
+                        <div>Status</div>
+                        <div>Action</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="payment-date">01 Jan 2025</div>
+                        <div class="payment-property">Loft Trastevere</div>
+                        <div class="payment-tenant">
+                            <div class="tenant-avatar" style="width: 24px; height: 24px; background: var(--boom-purple); border-radius: 50%;"></div>
+                            <span>Marco Rossi</span>
+                        </div>
+                        <div class="payment-amount">€1,800</div>
+                        <div class="payment-status status-received">Received</div>
+                        <div class="payment-action">Receipt</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="payment-date">01 Jan 2025</div>
+                        <div class="payment-property">Penthouse Monti</div>
+                        <div class="payment-tenant">
+                            <div class="tenant-avatar" style="width: 24px; height: 24px; background: var(--boom-cyan); border-radius: 50%;"></div>
+                            <span>Sarah Chen</span>
+                        </div>
+                        <div class="payment-amount">€3,500</div>
+                        <div class="payment-status status-received">Received</div>
+                        <div class="payment-action">Receipt</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="payment-date">01 Jan 2025</div>
+                        <div class="payment-property">Studio Colosseum</div>
+                        <div class="payment-tenant">
+                            <div class="tenant-avatar" style="width: 24px; height: 24px; background: var(--boom-green); border-radius: 50%;"></div>
+                            <span>John Smith</span>
+                        </div>
+                        <div class="payment-amount">€1,200</div>
+                        <div class="payment-status status-received">Received</div>
+                        <div class="payment-action">Receipt</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="payment-date">01 Jan 2025</div>
+                        <div class="payment-property">Apartment Prati</div>
+                        <div class="payment-tenant">
+                            <div class="tenant-avatar" style="width: 24px; height: 24px; background: var(--boom-yellow); border-radius: 50%;"></div>
+                            <span>Lisa Brown</span>
+                        </div>
+                        <div class="payment-amount">€700</div>
+                        <div class="payment-status status-pending">Due in 3 days</div>
+                        <div class="payment-action">Send Reminder</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Maintenance Alerts -->
+            <section style="margin-top: 40px;">
+                <div class="section-header">
+                    <h2 class="section-title">Maintenance Requests</h2>
+                </div>
+                <div class="alerts-grid">
+                    <div class="alert-card urgent">
+                        <div class="alert-icon">🚿</div>
+                        <div class="alert-details">
+                            <h4>Bathroom Leak - Trastevere Loft</h4>
+                            <p>Reported by Marco Rossi • 2 hours ago • Plumber scheduled</p>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="alert-btn">View Details</button>
+                            <button class="alert-btn urgent">Contact Plumber</button>
+                        </div>
+                    </div>
+                    <div class="alert-card">
+                        <div class="alert-icon">💡</div>
+                        <div class="alert-details">
+                            <h4>Light Fixture Replacement - Studio</h4>
+                            <p>Reported by John Smith • Yesterday • Awaiting approval</p>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="alert-btn">Approve</button>
+                            <button class="alert-btn">Decline</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Simple Chart Implementation
+        const canvas = document.getElementById('revenueChart');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            // Simple line chart visualization
+            ctx.strokeStyle = '#FFD700';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, 150);
+            ctx.lineTo(100, 140);
+            ctx.lineTo(200, 120);
+            ctx.lineTo(300, 110);
+            ctx.lineTo(400, 90);
+            ctx.lineTo(500, 70);
+            ctx.lineTo(600, 50);
+            ctx.stroke();
+        }
+
+        // Interactive elements
+        document.querySelectorAll('.property-card').forEach(card => {
+            card.addEventListener('click', function() {
+                console.log('Property clicked');
+            });
+        });
+
+        document.querySelectorAll('.payment-action').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (this.textContent === 'Send Reminder') {
+                    this.textContent = 'Reminder Sent';
+                    this.style.background = 'var(--boom-green)';
+                    this.style.color = 'var(--dark-bg)';
+                }
+            });
+        });
+
+        // Simulate real-time updates
+        function updateStats() {
+            // Simulate revenue changes
+            const revenueElement = document.querySelector('.revenue-value');
+            if (revenueElement) {
+                const currentValue = parseInt(revenueElement.textContent.replace('€', '').replace(',', ''));
+                const change = Math.random() > 0.5 ? 100 : -100;
+                const newValue = currentValue + change;
+                revenueElement.textContent = `€${newValue.toLocaleString()}`;
+            }
+        }
+
+        // Update every 10 seconds
+        setInterval(updateStats, 10000);
+    </script>
+</body>
+</html>

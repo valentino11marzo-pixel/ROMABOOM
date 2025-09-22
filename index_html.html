@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BOOM - Rome rentals done right. 48-hour move-in guarantee. Video-verified apartments. Powered by Egidi Immobiliare with 40 years experience.">
+    <meta name="keywords" content="Rome rentals, Rome apartments, expat housing Rome, mid-term rentals Rome, Egidi Immobiliare">
+    <title>BOOM - Rome Rentals in 48 Hours | Powered by Egidi Immobiliare</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --boom-yellow: #FFD700;
+            --boom-cyan: #00CED1;
+            --boom-green: #00FF88;
+            --boom-red: #FF3B3B;
+            --boom-purple: #9D4EDD;
+            --boom-orange: #FF6B35;
+            --dark-bg: #0A0A0A;
+            --dark-surface: #1A1A1A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #888888;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 30px;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 900;
+            text-decoration: none;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .logo-circle {
+            width: 35px;
+            height: 35px;
+            background: var(--boom-yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--boom-yellow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px var(--boom-yellow); }
+            50% { box-shadow: 0 0 50px var(--boom-yellow), 0 0 80px rgba(255, 215, 0, 0.5); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            padding: 10px 20px;
+            background: var(--boom-yellow);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* Hero Section - CONVERSION OPTIMIZED */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 20px 60px;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+        }
+
+        .trust-banner {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .trust-badge strong {
+            color: var(--boom-yellow);
+        }
+
+        h1 {
+            font-size: clamp(42px, 8vw, 84px);
+            font-weight: 900;
+            line-height: 1.1;
+            text-align: center;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.1s both;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--boom-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 4vw, 24px);
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero CTAs */
+        .hero-ctas {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .cta-primary {
+            padding: 18px 40px;
+            background: var(--boom-yellow);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 100px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-primary:active {
+            transform: scale(0.95);
+        }
+
+        .cta-secondary {
+            padding: 16px 36px;
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--text-primary);
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 400px;
+            margin: 60px auto 0;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--boom-yellow);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Problem/Solution Section */
+        .problems {
+            padding: 80px 20px;
+            background: var(--dark-surface);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 900;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .problems-grid {
+            display: grid;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .problem-card {
+            padding: 25px;
+            background: var(--dark-bg);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .problem-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .problem-icon {
+            font-size: 28px;
+        }
+
+        .problem-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .problem-old {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .problem-old::before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+        }
+
+        .problem-new {
+            color: var(--boom-green);
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .problem-new::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Services Grid */
+        .services {
+            padding: 80px 20px;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+        }
+
+        .services-grid {
+            display: grid;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            padding: 30px;
+            background: var(--dark-surface);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--boom-yellow);
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .service-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .service-price {
+            background: var(--boom-yellow);
+            color: var(--dark-bg);
+            padding: 5px 12px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .service-cta {
+            color: var(--boom-yellow);
+            font-weight: 600;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            padding: 80px 20px;
+            background: var(--dark-bg);
+            text-align: center;
+        }
+
+        .testimonial-quote {
+            font-size: clamp(20px, 4vw, 28px);
+            font-weight: 600;
+            line-height: 1.4;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: var(--text-primary);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--boom-cyan);
+            border-radius: 50%;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .author-title {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            padding: 80px 20px;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .cta-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 20px 40px;
+            background: var(--dark-surface);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--boom-yellow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-ctas {
+                flex-direction: column;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonial-author {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                <div class="logo-circle"></div>
+                <span>BOOM</span>
+            </div>
+            <div class="nav-links">
+                <a href="/truth.html" class="nav-link">The Truth</a>
+                <a href="/dashboard.html" class="nav-link">Dashboard</a>
+                <a href="https://wa.me/393313251961" class="nav-cta">WhatsApp</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="trust-banner">
+            <div class="trust-badge">
+                🏛️ <strong>Powered by Egidi Immobiliare</strong> • 40 years in Rome
+            </div>
+        </div>
+        
+        <h1>Rome rentals in <span class="gradient-text">48 hours.</span></h1>
+        <p class="hero-subtitle">Skip the nightmare. Video-verified apartments. English-speaking team. Move in this week.</p>
+        
+        <div class="hero-ctas">
+            <a href="/truth.html" class="cta-primary">
+                See Available Apartments
+            </a>
+            <a href="https://wa.me/393313251961" class="cta-secondary">
+                💬 Chat on WhatsApp
+            </a>
+        </div>
+        
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-number">48h</div>
+                <div class="stat-label">Move-in guarantee</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">9</div>
+                <div class="stat-label">Available now</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">387</div>
+                <div class="stat-label">Happy tenants</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4.9★</div>
+                <div class="stat-label">Average rating</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem/Solution Section -->
+    <section class="problems">
+        <div class="section-header">
+            <h2 class="section-title">Rome rental agencies are <span class="gradient-text">broken.</span></h2>
+            <p>Here's how we fix it.</p>
+        </div>
+        
+        <div class="problems-grid">
+            <div class="problem-card">
+                <div class="problem-header">
+                    <span class="problem-icon">📷</span>
+                    <h3 class="problem-title">Fake Listings</h3>
+                </div>
+                <p class="problem-old">Agencies: Beautiful photos of apartments rented months ago</p>
+                <p class="problem-new">BOOM: Video verification with timestamp. Real apartments only.</p>
+            </div>
+            
+            <div class="problem-card">
+                <div class="problem-header">
+                    <span class="problem-icon">💰</span>
+                    <h3 class="problem-title">Hidden Fees</h3>
+                </div>
+                <p class="problem-old">Agencies: €8,000 upfront (1st+last+deposit+fees+fees+more fees)</p>
+                <p class="problem-new">BOOM: One commission. Transparent. That's it.</p>
+            </div>
+            
+            <div class="problem-card">
+                <div class="problem-header">
+                    <span class="problem-icon">⏰</span>
+                    <h3 class="problem-title">Endless Waiting</h3>
+                </div>
+                <p class="problem-old">Agencies: 45 days average. Maybe. If you're lucky.</p>
+                <p class="problem-new">BOOM: 48-hour guarantee or we pay your hotel.</p>
+            </div>
+            
+            <div class="problem-card">
+                <div class="problem-header">
+                    <span class="problem-icon">🗣️</span>
+                    <h3 class="problem-title">Language Barrier</h3>
+                </div>
+                <p class="problem-old">Agencies: Broken English, lost in translation</p>
+                <p class="problem-new">BOOM: Native-level English fluency</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="section-header">
+            <h2 class="section-title">Everything you need.<br><span class="gradient-text">Nothing you don't.</span></h2>
+        </div>
+        
+        <div class="services-grid">
+            <a href="/truth.html" class="service-card">
+                <div class="service-header">
+                    <h3 class="service-title">🎥 Verified Apartments</h3>
+                    <span class="service-price">Free</span>
+                </div>
+                <p class="service-description">Browse real apartments with video tours. No catfishing. No surprises. What you see is what you get.</p>
+                <p class="service-cta">View 9 Available Now →</p>
+            </a>
+            
+            <a href="/truth.html" class="service-card">
+                <div class="service-header">
+                    <h3 class="service-title">🎯 Property Finding</h3>
+                    <span class="service-price">€300</span>
+                </div>
+                <p class="service-description">Can't find what you want? We'll hunt it down. Off-market access. Money back if we fail.</p>
+                <p class="service-cta">Start Your Hunt →</p>
+            </a>
+            
+            <a href="/truth.html" class="service-card">
+                <div class="service-header">
+                    <h3 class="service-title">🏠 For Owners</h3>
+                    <span class="service-price">Free Listing</span>
+                </div>
+                <p class="service-description">Get quality international tenants. Guaranteed rent. Full management. Zero vacancy.</p>
+                <p class="service-cta">List Your Property →</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="testimonial">
+        <p class="testimonial-quote">
+            "After 3 months of agency nightmares, BOOM found me the perfect apartment in 2 days. They speak actual English and actually care."
+        </p>
+        <div class="testimonial-author">
+            <div class="author-avatar"></div>
+            <div class="author-info">
+                <div class="author-name">Sarah Chen</div>
+                <div class="author-title">Google • Moved from Singapore</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <h2 class="cta-title">Ready to skip the <span class="gradient-text">nightmare?</span></h2>
+        <p class="cta-subtitle">Join hundreds who've found their Rome home the right way.</p>
+        <div class="hero-ctas">
+            <a href="/truth.html" class="cta-primary">
+                Browse Apartments
+            </a>
+            <a href="https://wa.me/393313251961" class="cta-secondary">
+                💬 Chat on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">Quick Links</h4>
+                <div class="footer-links">
+                    <a href="/truth.html">Available Apartments</a>
+                    <a href="/truth.html">Pre-Check</a>
+                    <a href="/truth.html">Property Finding</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Company</h4>
+                <div class="footer-links">
+                    <a href="/truth.html">The Rome Truth</a>
+                    <a href="/dashboard.html">Dashboard</a>
+                    <a href="mailto:hello@boom.rent">Contact</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Legal</h4>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">GDPR</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Contact</h4>
+                <div class="footer-links">
+                    <a href="https://wa.me/393313251961">WhatsApp</a>
+                    <a href="mailto:hello@boom.rent">hello@boom.rent</a>
+                    <a href="#">+39 331 325 1961</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.pageYOffset > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>

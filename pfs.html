@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOM PFS - We Find What Doesn't Exist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --boom-yellow: #FFD700;
+            --boom-cyan: #00CED1;
+            --boom-green: #00FF88;
+            --boom-red: #FF3B3B;
+            --boom-purple: #9D4EDD;
+            --boom-orange: #FF6B35;
+            --dark-bg: #0A0A0A;
+            --dark-surface: #1A1A1A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #888888;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            cursor: pointer;
+        }
+
+        .logo-circle {
+            width: 35px;
+            height: 35px;
+            background: var(--boom-yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--boom-yellow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px var(--boom-yellow); }
+            50% { box-shadow: 0 0 50px var(--boom-yellow), 0 0 80px rgba(255, 215, 0, 0.5); }
+        }
+
+        /* Hero Section */
+        .pfs-hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 150px 50px 80px;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(157, 78, 221, 0.08) 0%, transparent 60%);
+        }
+
+        .urgency-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(255, 59, 59, 0.1);
+            border: 1px solid rgba(255, 59, 59, 0.3);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--boom-red);
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 900;
+            line-height: 1.1;
+            text-align: center;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease 0.1s both;
+            max-width: 900px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--boom-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--text-secondary);
+            margin: 30px 0 20px;
+            text-align: center;
+            max-width: 600px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+            line-height: 1.5;
+        }
+
+        .price-highlight {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--boom-yellow);
+            margin: 20px 0 10px;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .price-disclaimer {
+            font-size: 16px;
+            color: var(--boom-green);
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* PFS Pre-Check System */
+        .pfs-precheck {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 50px;
+            background: var(--dark-surface);
+            border: 2px solid var(--boom-purple);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 100px rgba(157, 78, 221, 0.1);
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .precheck-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .precheck-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--boom-purple);
+        }
+
+        .precheck-subtitle {
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .reality-check {
+            padding: 20px;
+            background: rgba(255, 59, 59, 0.05);
+            border: 1px solid rgba(255, 59, 59, 0.2);
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .reality-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--boom-red);
+            margin-bottom: 10px;
+        }
+
+        .reality-list {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .reality-list li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .reality-list li::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Deep Pre-Check Questions */
+        .deep-questions {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .deep-question {
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .question-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .importance-badge {
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .importance-critical {
+            background: var(--boom-red);
+        }
+
+        .importance-high {
+            background: var(--boom-orange);
+        }
+
+        .importance-medium {
+            background: var(--boom-yellow);
+            color: var(--dark-bg);
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: var(--boom-purple);
+            background: rgba(157, 78, 221, 0.05);
+        }
+
+        .question-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .option-card {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--boom-purple);
+        }
+
+        .option-card.selected {
+            background: var(--boom-purple);
+            border-color: var(--boom-purple);
+        }
+
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .option-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .selected .option-desc {
+            color: var(--text-primary);
+        }
+
+        /* Deal Breakers Section */
+        .dealbreakers {
+            padding: 25px;
+            background: rgba(255, 59, 59, 0.05);
+            border: 2px solid rgba(255, 59, 59, 0.3);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .dealbreakers-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--boom-red);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .dealbreaker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .dealbreaker-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dealbreaker-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--boom-red);
+        }
+
+        .dealbreaker-label {
+            font-size: 14px;
+        }
+
+        /* Submit Section */
+        .submit-section {
+            text-align: center;
+        }
+
+        .payment-notice {
+            padding: 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .payment-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--boom-yellow);
+            margin-bottom: 10px;
+        }
+
+        .payment-details {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 20px;
+            background: var(--boom-purple);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(157, 78, 221, 0.4);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Success Stories */
+        .success-section {
+            padding: 100px 50px;
+            background: linear-gradient(180deg, var(--dark-bg) 0%, rgba(0, 255, 136, 0.02) 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .success-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .success-card {
+            padding: 35px;
+            background: var(--dark-surface);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .success-card::before {
+            content: '✓';
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background: var(--boom-green);
+            color: var(--dark-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .success-request {
+            font-size: 16px;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .success-result {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--boom-green);
+            margin-bottom: 15px;
+        }
+
+        .success-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--boom-purple), var(--boom-cyan));
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name {
+            font-weight: 600;
+        }
+
+        .author-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pfs-hero {
+                padding: 120px 20px 60px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .pfs-precheck {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                <div class="logo-circle"></div>
+                <span>BOOM</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pfs-hero">
+        <div class="urgency-badge">⚠️ We reject 60% of PFS requests • Only serious hunters welcome</div>
+        <h1>Can't find your apartment?<br><span class="gradient-text">We'll hunt it down.</span></h1>
+        <p class="hero-subtitle">Off-market properties, private landlords, impossible requirements. If it exists in Rome, we'll find it.</p>
+        <div class="price-highlight">€350 upfront</div>
+        <div class="price-disclaimer">✓ Deducted from commission if you rent • 100% refund if we fail</div>
+        
+        <!-- PFS Pre-Check System -->
+        <div class="pfs-precheck">
+            <div class="precheck-header">
+                <div class="precheck-title">Property Finding Pre-Check</div>
+                <div class="precheck-subtitle">Be brutally honest or waste €350</div>
+            </div>
+
+            <div class="reality-check">
+                <div class="reality-title">🚨 Reality Check First</div>
+                <ul class="reality-list">
+                    <li>If you want central Rome under €800, stop now</li>
+                    <li>If you can't prove income, we can't help</li>
+                    <li>If you need it tomorrow, too late</li>
+                    <li>If you want "perfection", hire an interior designer</li>
+                </ul>
+            </div>
+
+            <div class="deep-questions">
+                <!-- The Money Question -->
+                <div class="deep-question">
+                    <div class="question-header">
+                        <div class="question-title">Your ACTUAL budget (including utilities)</div>
+                        <span class="importance-badge importance-critical">Critical</span>
+                    </div>
+                    <div class="question-options">
+                        <div class="option-card" data-value="low">
+                            <div class="option-title">€800-1,200</div>
+                            <div class="option-desc">Studios only, forget central</div>
+                        </div>
+                        <div class="option-card" data-value="medium">
+                            <div class="option-title">€1,200-2,000</div>
+                            <div class="option-desc">1-2 beds, decent areas</div>
+                        </div>
+                        <div class="option-card" data-value="high">
+                            <div class="option-title">€2,000-3,000</div>
+                            <div class="option-desc">Nice places, good zones</div>
+                        </div>
+                        <div class="option-card" data-value="premium">
+                            <div class="option-title">€3,000+</div>
+                            <div class="option-desc">Whatever you want</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Impossible Requirements -->
+                <div class="deep-question">
+                    <div class="question-header">
+                        <div class="question-title">Your "must-haves" (pick max 3 or you'll get nothing)</div>
+                        <span class="importance-badge importance-critical">Critical</span>
+                    </div>
+                    <div class="question-options">
+                        <div class="option-card" data-value="central">
+                            <div class="option-title">Central Location</div>
+                            <div class="option-desc">Walking distance to everything</div>
+                        </div>
+                        <div class="option-card" data-value="modern">
+                            <div class="option-title">Modern/Renovated</div>
+                            <div class="option-desc">Not a 1970s nightmare</div>
+                        </div>
+                        <div class="option-card" data-value="space">
+                            <div class="option-title">Lots of Space</div>
+                            <div class="option-desc">Actual rooms, not closets</div>
+                        </div>
+                        <div class="option-card" data-value="terrace">
+                            <div class="option-title">Terrace/Balcony</div>
+                            <div class="option-desc">Outdoor space</div>
+                        </div>
+                        <div class="option-card" data-value="quiet">
+                            <div class="option-title">Quiet Street</div>
+                            <div class="option-desc">No clubs, no traffic</div>
+                        </div>
+                        <div class="option-card" data-value="parking">
+                            <div class="option-title">Parking Included</div>
+                            <div class="option-desc">Good luck with this</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Flexibility Test -->
+                <div class="deep-question">
+                    <div class="question-header">
+                        <div class="question-title">What would you compromise on? (If nothing, stop now)</div>
+                        <span class="importance-badge importance-high">Important</span>
+                    </div>
+                    <input type="text" class="question-input" placeholder="e.g., 'Would accept 4th floor no elevator for right price'">
+                </div>
+
+                <!-- The Timeline -->
+                <div class="deep-question">
+                    <div class="question-header">
+                        <div class="question-title">When do you ACTUALLY need to move?</div>
+                        <span class="importance-badge importance-high">Important</span>
+                    </div>
+                    <div class="question-options">
+                        <div class="option-card" data-value="asap">
+                            <div class="option-title">ASAP (1 week)</div>
+                            <div class="option-desc">Emergency mode</div>
+                        </div>
+                        <div class="option-card" data-value="month">
+                            <div class="option-title">Within 1 month</div>
+                            <div class="option-desc">Standard timeline</div>
+                        </div>
+                        <div class="option-card" data-value="flexible">
+                            <div class="option-title">Flexible (2+ months)</div>
+                            <div class="option-desc">Can wait for perfect</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Documentation Reality -->
+                <div class="deep-question">
+                    <div class="question-header">
+                        <div class="question-title">Can you provide ALL these documents?</div>
+                        <span class="importance-badge importance-critical">Critical</span>
+                    </div>
+                    <div style="display: grid; gap: 10px;">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" style="width: 20px; height: 20px;">
+                            <span>Last 3 pay slips or tax returns</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" style="width: 20px; height: 20px;">
+                            <span>Employment contract or P.IVA</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" style="width: 20px; height: 20px;">
+                            <span>Valid ID/Passport</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" style="width: 20px; height: 20px;">
+                            <span>Codice Fiscale</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" style="width: 20px; height: 20px;">
+                            <span>Bank statements (if requested)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- The Special Situation -->
+                <div class="deep-question">
+                    <div class="question-header">
+                        <div class="question-title">Any "special circumstances" we should know?</div>
+                        <span class="importance-badge importance-medium">Be honest</span>
+                    </div>
+                    <textarea class="question-input" rows="3" placeholder="Pets, instruments, home business, parties, specific needs..."></textarea>
+                </div>
+            </div>
+
+            <!-- Deal Breakers -->
+            <div class="dealbreakers">
+                <div class="dealbreakers-title">🚫 Absolute Deal Breakers (Check if any apply)</div>
+                <div class="dealbreaker-grid">
+                    <div class="dealbreaker-item">
+                        <input type="checkbox" class="dealbreaker-checkbox" data-dealbreaker="true">
+                        <label class="dealbreaker-label">I've been evicted before</label>
+                    </div>
+                    <div class="dealbreaker-item">
+                        <input type="checkbox" class="dealbreaker-checkbox" data-dealbreaker="true">
+                        <label class="dealbreaker-label">I can't prove income</label>
+                    </div>
+                    <div class="dealbreaker-item">
+                        <input type="checkbox" class="dealbreaker-checkbox" data-dealbreaker="true">
+                        <label class="dealbreaker-label">I need it for less than 3 months</label>
+                    </div>
+                    <div class="dealbreaker-item">
+                        <input type="checkbox" class="dealbreaker-checkbox" data-dealbreaker="true">
+                        <label class="dealbreaker-label">I want to pay in cash only</label>
+                    </div>
+                    <div class="dealbreaker-item">
+                        <input type="checkbox" class="dealbreaker-checkbox" data-dealbreaker="true">
+                        <label class="dealbreaker-label">I refuse video verification</label>
+                    </div>
+                    <div class="dealbreaker-item">
+                        <input type="checkbox" class="dealbreaker-checkbox" data-dealbreaker="true">
+                        <label class="dealbreaker-label">I'm not actually ready to move</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Section -->
+            <div class="submit-section">
+                <div class="payment-notice">
+                    <div class="payment-title">💰 How Payment Works</div>
+                    <div class="payment-details">
+                        <strong>€350 upfront</strong> to start the hunt<br>
+                        If we find and you rent: deducted from commission<br>
+                        If we can't find what you want: <strong>100% refund in 24h</strong><br>
+                        <span style="color: var(--boom-red);">If you ghost us or change requirements: you lose it</span>
+                    </div>
+                </div>
+                
+                <button class="submit-button" id="submitPFS">
+                    Start My €350 Property Hunt →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="success-section">
+        <div class="section-header">
+            <h2 class="section-title">Impossible finds we've<br><span style="color: var(--boom-green);">actually delivered.</span></h2>
+        </div>
+        
+        <div class="success-grid">
+            <div class="success-card">
+                <div class="success-request">"2BR in Trastevere, under €1,500, with terrace, allows dogs"</div>
+                <div class="success-result">Found: €1,450, 65m² terrace, owner loves dogs</div>
+                <div class="success-author">
+                    <div class="author-avatar"></div>
+                    <div class="author-info">
+                        <div class="author-name">Sarah M.</div>
+                        <div class="author-details">Found in 4 days • Off-market</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="success-card">
+                <div class="success-request">"Near Colosseum, modern, under €1,200, minimum 50m²"</div>
+                <div class="success-result">Found: €1,180, newly renovated, 52m²</div>
+                <div class="success-author">
+                    <div class="author-avatar"></div>
+                    <div class="author-info">
+                        <div class="author-name">Marco R.</div>
+                        <div class="author-details">Found in 6 days • Private landlord</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="success-card">
+                <div class="success-request">"Quiet area, parking, 3BR, under €2,500"</div>
+                <div class="success-result">Found: €2,400, Parioli, garage included</div>
+                <div class="success-author">
+                    <div class="author-avatar"></div>
+                    <div class="author-info">
+                        <div class="author-name">James K.</div>
+                        <div class="author-details">Found in 3 days • Exclusive listing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Pre-Check System Logic
+        const optionCards = document.querySelectorAll('.option-card');
+        const dealbreakers = document.querySelectorAll('.dealbreaker-checkbox');
+        const submitBtn = document.getElementById('submitPFS');
+        let selections = {
+            budget: null,
+            mustHaves: [],
+            timeline: null,
+            documents: []
+        };
+
+        // Option card selection
+        optionCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const parent = this.closest('.question-options');
+                const question = this.closest('.deep-question');
+                
+                // Handle must-haves (max 3)
+                if (this.dataset.value && parent.querySelectorAll('.option-card').length === 6) {
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        const index = selections.mustHaves.indexOf(this.dataset.value);
+                        if (index > -1) selections.mustHaves.splice(index, 1);
+                    } else {
+                        if (parent.querySelectorAll('.selected').length < 3) {
+                            this.classList.add('selected');
+                            selections.mustHaves.push(this.dataset.value);
+                        } else {
+                            alert('Maximum 3 must-haves! Remove one first.');
+                        }
+                    }
+                } else {
+                    // Handle single selection questions
+                    parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        // Document checkboxes
+        document.querySelectorAll('input[type="checkbox"]:not(.dealbreaker-checkbox)').forEach(cb => {
+            cb.addEventListener('change', function() {
+                if (this.checked) {
+                    selections.documents.push(this.nextElementSibling.textContent);
+                } else {
+                    const index = selections.documents.indexOf(this.nextElementSibling.textContent);
+                    if (index > -1) selections.documents.splice(index, 1);
+                }
+            });
+        });
+
+        // Dealbreaker detection
+        dealbreakers.forEach(cb => {
+            cb.addEventListener('change', function() {
+                if (this.checked) {
+                    submitBtn.style.background = 'var(--boom-red)';
+                    submitBtn.innerHTML = '❌ You don\'t qualify for PFS';
+                    submitBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        alert('Sorry, this is a dealbreaker. Try traditional agencies.');
+                    }, 500);
+                } else {
+                    // Check if any other dealbreakers are checked
+                    const anyChecked = Array.from(dealbreakers).some(d => d.checked);
+                    if (!anyChecked) {
+                        submitBtn.style.background = '';
+                        submitBtn.innerHTML = 'Start My €350 Property Hunt →';
+                        submitBtn.disabled = false;
+                    }
+                }
+            });
+        });
+
+        // Submit handler
+        submitBtn.addEventListener('click', function() {
+            // Check if all required fields are filled
+            const hasAllDocs = selections.documents.length === 5;
+            const hasBudget = document.querySelector('.option-card[data-value="low"].selected, .option-card[data-value="medium"].selected, .option-card[data-value="high"].selected, .option-card[data-value="premium"].selected');
+            
+            if (!hasAllDocs) {
+                this.style.background = 'var(--boom-orange)';
+                this.innerHTML = '⚠️ Missing documents';
+                setTimeout(() => {
+                    alert('You need ALL documents to proceed. No exceptions.');
+                    this.style.background = '';
+                    this.innerHTML = 'Start My €350 Property Hunt →';
+                }, 1000);
+                return;
+            }
+            
+            if (!hasBudget) {
+                alert('Select your budget range first');
+                return;
+            }
+            
+            // Success
+            this.style.background = 'var(--boom-green)';
+            this.innerHTML = '✓ Proceeding to payment...';
+            
+            setTimeout(() => {
+                // Would redirect to Stripe checkout
+                window.location.href = '/pfs-checkout';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

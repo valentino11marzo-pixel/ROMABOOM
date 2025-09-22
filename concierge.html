@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOM - Concierge Services | Your Rome Support Team</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --yellow: #FFD700;
+            --cyan: #00CED1;
+            --green: #00FF7F;
+            --dark: #0a0a0a;
+            --darker: #050505;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.95), transparent);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-circle {
+            width: 35px;
+            height: 35px;
+            background: var(--yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow);
+        }
+
+        /* Hero Section */
+        .concierge-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 60px;
+            background: radial-gradient(circle at center, rgba(0, 206, 209, 0.08) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 206, 209, 0.1);
+            border: 1px solid rgba(0, 206, 209, 0.3);
+            padding: 10px 25px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 7vw, 56px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            color: var(--cyan);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Services Grid */
+        .services-section {
+            padding: 80px 20px;
+            background: var(--darker);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--cyan);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 206, 209, 0.3);
+            background: rgba(0, 206, 209, 0.03);
+        }
+
+        .service-icon {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .service-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .service-price {
+            font-size: 18px;
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        /* Packages Section */
+        .packages-section {
+            padding: 80px 20px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 206, 209, 0.03), transparent);
+        }
+
+        .packages-grid {
+            max-width: 1000px;
+            margin: 60px auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .package-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .package-card.featured {
+            border-color: var(--cyan);
+            background: rgba(0, 206, 209, 0.05);
+            transform: scale(1.05);
+        }
+
+        .package-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--cyan);
+            color: var(--dark);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 206, 209, 0.4);
+        }
+
+        .package-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .package-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .package-price {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--cyan);
+            margin-bottom: 10px;
+        }
+
+        .package-period {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .package-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .package-features li:last-child {
+            border-bottom: none;
+        }
+
+        .package-btn {
+            background: var(--cyan);
+            color: var(--dark);
+            padding: 14px 35px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .package-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 206, 209, 0.4);
+        }
+
+        /* How It Works */
+        .how-section {
+            padding: 80px 20px;
+            background: var(--darker);
+        }
+
+        .steps-container {
+            max-width: 800px;
+            margin: 60px auto 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--cyan);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 20px;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(0, 206, 209, 0.08) 0%, transparent 50%);
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .cta-content p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--yellow);
+            color: var(--dark);
+            padding: 16px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 16px 40px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/index.html" class="logo">
+                <div class="logo-circle"></div>
+                <div class="logo-text">BOOM</div>
+            </a>
+            <div class="nav-links">
+                <a href="/apartments.html">Apartments</a>
+                <a href="/pfs.html">Property Finding</a>
+                <a href="/concierge.html">Concierge</a>
+                <a href="/owner.html">For Owners</a>
+                <a href="/truth.html">About</a>
+                <a href="https://wa.me/393313251961" target="_blank">WhatsApp</a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="concierge-hero">
+        <div class="hero-content">
+            <div class="hero-badge">💎 Premium Support Services</div>
+            <h1>Your Personal <span class="highlight">Rome Team</span><br>On-Demand</h1>
+            <p>From cleaning to airport transfers, grocery delivery to handyman services.<br>We handle the details so you can enjoy Rome.</p>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-section">
+        <div class="section-header">
+            <h2>Individual Services</h2>
+            <p>Book exactly what you need, when you need it</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🧹</div>
+                <div class="service-title">Cleaning Service</div>
+                <div class="service-description">Professional cleaning for your apartment. Weekly, bi-weekly, or monthly. Eco-friendly products, trusted staff.</div>
+                <div class="service-price">From €25/hour</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">✈️</div>
+                <div class="service-title">Airport Transfers</div>
+                <div class="service-description">Private driver from/to Fiumicino or Ciampino. Meet & greet service, luggage assistance, fixed prices.</div>
+                <div class="service-price">€50-70 fixed rate</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🛒</div>
+                <div class="service-title">Grocery Delivery</div>
+                <div class="service-description">Stock your fridge before arrival or weekly shopping. Quality products from local markets and stores.</div>
+                <div class="service-price">€30 + groceries</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔧</div>
+                <div class="service-title">Handyman Services</div>
+                <div class="service-description">Quick fixes, installations, minor repairs. Available same-day for emergencies. Licensed professionals.</div>
+                <div class="service-price">From €40/hour</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📄</div>
+                <div class="service-title">Bureaucracy Help</div>
+                <div class="service-description">Codice Fiscale, residence permits, utility setup, bank accounts. We navigate Italian paperwork for you.</div>
+                <div class="service-price">€100 per service</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🏥</div>
+                <div class="service-title">Medical Assistance</div>
+                <div class="service-description">Find English-speaking doctors, book appointments, emergency support. Your health concierge in Rome.</div>
+                <div class="service-price">€50 coordination fee</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section class="packages-section">
+        <div class="section-header">
+            <h2>Monthly Packages</h2>
+            <p>Save with our all-inclusive concierge subscriptions</p>
+        </div>
+        <div class="packages-grid">
+            <div class="package-card">
+                <h3 class="package-name">ESSENTIAL</h3>
+                <div class="package-price">€99</div>
+                <div class="package-period">per month</div>
+                <ul class="package-features">
+                    <li>✓ 2 cleaning sessions</li>
+                    <li>✓ 1 airport transfer</li>
+                    <li>✓ WhatsApp support</li>
+                    <li>✓ Emergency handyman priority</li>
+                </ul>
+                <a href="https://wa.me/393313251961" class="package-btn">Get Started</a>
+            </div>
+            
+            <div class="package-card featured">
+                <h3 class="package-name">COMFORT</h3>
+                <div class="package-price">€199</div>
+                <div class="package-period">per month</div>
+                <ul class="package-features">
+                    <li>✓ Weekly cleaning</li>
+                    <li>✓ 2 airport transfers</li>
+                    <li>✓ Weekly grocery delivery</li>
+                    <li>✓ 2 hours handyman included</li>
+                    <li>✓ Priority 24/7 support</li>
+                </ul>
+                <a href="https://wa.me/393313251961" class="package-btn">Most Popular</a>
+            </div>
+            
+            <div class="package-card">
+                <h3 class="package-name">LUXURY</h3>
+                <div class="package-price">€399</div>
+                <div class="package-period">per month</div>
+                <ul class="package-features">
+                    <li>✓ Bi-weekly deep cleaning</li>
+                    <li>✓ Unlimited airport transfers</li>
+                    <li>✓ Weekly groceries + special requests</li>
+                    <li>✓ 5 hours handyman included</li>
+                    <li>✓ Personal assistant (10h/month)</li>
+                    <li>✓ Restaurant reservations</li>
+                </ul>
+                <a href="https://wa.me/393313251961" class="package-btn">Go Premium</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-section">
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Simple, reliable, always available</p>
+        </div>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Request Service</h3>
+                    <p>WhatsApp us what you need. We respond within 30 minutes during business hours, 2 hours evenings/weekends.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Confirmation & Scheduling</h3>
+                    <p>We confirm availability, price, and timing. All service providers are vetted and insured.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Service Delivery</h3>
+                    <p>Professional arrives on time, completes service, you pay directly or through us. Simple.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Follow-up</h3>
+                    <p>We check everything went perfectly. Any issues? We fix them immediately at no extra cost.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Living in Rome Made Easy</h2>
+            <p>Stop struggling with language barriers and logistics.<br>Your personal support team is one message away.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/393313251961" class="btn-primary">WhatsApp Now</a>
+                <a href="/apartments.html" class="btn-secondary">View Apartments</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn?.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '60px';
+            navLinks.style.right = '20px';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.background = 'rgba(10, 10, 10, 0.95)';
+            navLinks.style.padding = '20px';
+            navLinks.style.borderRadius = '10px';
+        });
+
+        // Smooth reveal on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .package-card, .step').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'all 0.6s ease-out';
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
